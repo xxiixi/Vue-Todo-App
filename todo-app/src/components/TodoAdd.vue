@@ -1,16 +1,43 @@
 <template>
   <!-- Add todo -->
   <div class="input-add">
-    <input type="text" name="todo" />
-    <button>
+    <!-- 1. 在 todo-add 组件中，首先需要一个 v-model，用于同步用户输入的 todo 内容，这里还是在 setup 函数中，定义一个 ref，默认值为空，然后返回它，传递给 input 的 v-model 属性： -->
+    <input type="text" v-model="todoContent" @keyup.enter="emitAddTodo" />
+    <button @click="emitAddTodo">
       <i class="plus"></i>
     </button>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
   name: "TodoAdd",
+  props: {
+    tid: {
+      type: Number,
+      required: true,
+    },
+  },
+  setup(props, context) {
+    const todoContent = ref("");
+
+    const emitAddTodo = () => {
+      const todo = {
+        id: props.tid,
+        content: todoContent.value,
+        completed: false,
+      };
+      context.emit("add-todo", todo);
+      todoContent.value = "";
+    };
+
+    return {
+      todoContent,
+      emitAddTodo,
+    }; // Removed the extra comma here
+  },
 };
 </script>
 

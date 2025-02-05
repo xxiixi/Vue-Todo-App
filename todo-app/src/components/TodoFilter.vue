@@ -3,7 +3,7 @@
   <div class="filters">
     <span class="filter active">All</span>
     <span class="filter">Finished</span>
-    <span class="filter">Not Start</span>
+    <span class="filter">Unfinished</span>
   </div>
 </template>
 

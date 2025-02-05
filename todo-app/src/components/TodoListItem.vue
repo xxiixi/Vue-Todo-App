@@ -1,9 +1,13 @@
 <template>
-  <div class="todo-item">
+  <div class="todo-item" :class="{ done: todoItem.completed }">
     <!-- 用 label 包裹后，点击里边任何一个元素都能触发 checkbox 的事件 -->
     <label>
-      <input type="checkbox" />
-      HTML+CSS
+      <input
+        type="checkbox"
+        :checked="todoItem.completed"
+        @click="$emit('change-state', $event)"
+      />
+      {{ todoItem.content }}
       <span class="check-button"></span>
     </label>
   </div>
@@ -12,6 +16,7 @@
 <script>
 export default {
   name: "TodoListItem",
+  props: ["todoItem"],
 };
 </script>
 
@@ -27,6 +32,12 @@ export default {
   position: relative;
   display: flex;
   align-items: center;
+  cursor: pointer;
+}
+
+.todo-item.done label {
+  text-decoration: line-through;
+  font-style: italic;
 }
 
 /* 选中item的动画特效 */
