@@ -4,8 +4,8 @@
       <h1>xxiixi Todo-list</h1>
       <!-- 4. 然后，通过@add-todo 监听 todo-add 组件的事件，使用 addTodo 这个函数处理事件。再给 todo-add 组件传递一个 tid 属性，用于生成新的 todo 的 id，这里简单的就是数组的长度。 -->
       <todo-add :tid="todos.length" @add-todo="addTodo" />
-      <todo-filter />
-      <todo-list :todos="todos" />
+      <todo-filter :selected="filter" @change-filter="filter = $event" />
+      <todo-list :todos="filteredTodos" />
     </div>
   </main>
 </template>
@@ -17,6 +17,7 @@ import { ref } from "vue";
 import TodoAdd from "./components/TodoAdd.vue";
 import TodoList from "./components/TodoList.vue";
 import TodoFilter from "./components/TodoFilter.vue";
+import { computed } from "vue";
 
 export default {
   name: "App",
@@ -31,11 +32,24 @@ export default {
     const addTodo = (todo) => {
       todos.value.push(todo);
     };
+    const filter = ref("all");
+    const filteredTodos = computed(() => {
+      switch (filter.value) {
+        case "done":
+          return todos.value.filter((todo) => todo.completed);
+        case "todo":
+          return todos.value.filter((todo) => !todo.completed);
+        default:
+          return todos.value;
+      }
+    });
 
     // 3. 为了在 template 中使用数据和函数，我们需要在 setup 中，以对象的形式返回它们：
     return {
       todos,
+      filter,
       addTodo,
+      filteredTodos,
     };
   },
 };
