@@ -9,7 +9,7 @@
 
 ## Development Process Record
 
-### html part
+### Function part
 
 - 整体的容器:占满整个浏览器 ✅
 - todo 应用：水平居中在页面 ✅
