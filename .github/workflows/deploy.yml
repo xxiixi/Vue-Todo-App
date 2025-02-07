@@ -16,9 +16,7 @@ jobs:
       - name: Move to project directory
         run: cd todo-app
 
-
       - name: Install dependencies
-        run: cd todo-app 
         run: npm install
 
       - name: Build project
