@@ -13,12 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 17
+      - name: Move to project directory
+        run: cd todo-app
+
 
       - name: Install dependencies
+        cd todo-app 
         run: npm install
 
       - name: Build project
@@ -28,4 +28,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: dist # Vue CLI 的默认构建目录
+          folder: todo-app/dist # Vue CLI 的默认构建目录
